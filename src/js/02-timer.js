@@ -30,6 +30,8 @@ function checkFutureDate() {
       showOnlyTheLastOne: true,
       position: 'center-top',
     });
+    startBtn.disabled = true;
+
     return;
   }
   startBtn.disabled = false;
