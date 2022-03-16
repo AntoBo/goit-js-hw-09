@@ -4,9 +4,14 @@ import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 //get controls
-let currentDate = new Date();
-let futureDate = null;
-let timeDelta = null;
+let userChosenTime = null;
+
+const refs = {
+  days: document.querySelector('[data-days]'),
+  hours: document.querySelector('[data-hours]'),
+  minutes: document.querySelector('[data-minutes]'),
+  seconds: document.querySelector('[data-seconds]'),
+};
 
 const startBtn = document.querySelector('[data-start]');
 startBtn.addEventListener('click', startCountdown);
@@ -17,13 +22,37 @@ const flatPicker = flatpickr('input#datetime-picker', {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    futureDate = selectedDates[0];
-    timeDelta = futureDate.getTime() - currentDate.getTime();
-    checkFutureDate();
+    checkFutureDate(selectedDates[0]);
   },
 });
 
-function checkFutureDate() {
+function startCountdown() {
+  //show once on click startBtn
+  const currentTime = new Date();
+  const timeDelta = userChosenTime.getTime() - currentTime.getTime();
+  setClockFace(convertMs(timeDelta));
+
+  setInterval(() => {
+    //show per interval
+    const currentTime = new Date();
+    const timeDelta = userChosenTime.getTime() - currentTime.getTime();
+    setClockFace(convertMs(timeDelta));
+  }, 1000);
+}
+function addLeadingZero(value) {
+  return value.toString().padStart(2, '0');
+}
+function setClockFace(timeObj) {
+  refs.days.textContent = addLeadingZero(timeObj.days);
+  refs.hours.textContent = addLeadingZero(timeObj.hours);
+  refs.minutes.textContent = addLeadingZero(timeObj.minutes);
+  refs.seconds.textContent = addLeadingZero(timeObj.seconds);
+}
+function checkFutureDate(userTime) {
+  const currentTime = new Date();
+  userChosenTime = userTime;
+  const timeDelta = userChosenTime.getTime() - currentTime.getTime();
+
   if (timeDelta < 0) {
     Notify.failure('Please choose a date in future', {
       timeout: 2000,
@@ -36,12 +65,6 @@ function checkFutureDate() {
   }
   startBtn.disabled = false;
 }
-
-function startCountdown() {
-  console.log('startCountdown');
-  console.log(convertMs(timeDelta));
-}
-
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
