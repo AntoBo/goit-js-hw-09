@@ -32,11 +32,17 @@ function startCountdown() {
   const timeDelta = userChosenTime.getTime() - currentTime.getTime();
   setClockFace(convertMs(timeDelta));
 
-  setInterval(() => {
+  const intervalId = setInterval(() => {
     //show per interval
     const currentTime = new Date();
     const timeDelta = userChosenTime.getTime() - currentTime.getTime();
     setClockFace(convertMs(timeDelta));
+
+    //stop interval on timeout
+    if (timeDelta < 1000) {
+      clearInterval(intervalId);
+      console.log('time is out');
+    }
   }, 1000);
 }
 function addLeadingZero(value) {
