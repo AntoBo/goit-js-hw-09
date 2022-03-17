@@ -7,8 +7,6 @@ body {
     'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 28px;
-  font-weight: 700;
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
@@ -32,4 +30,9 @@ img {
   font-size: 18px;
   font-weight: normal;
   color: grey;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 700;
 }
