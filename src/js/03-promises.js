@@ -14,7 +14,6 @@ document.querySelector('.form').addEventListener('submit', event => {
 
   //create cycle of promises
   for (; position <= amount; position++) {
-    console.log(`position is ${position}`);
     createPromise(position, delay)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
