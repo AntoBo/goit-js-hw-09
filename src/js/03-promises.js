@@ -9,11 +9,9 @@ document.querySelector('.form').addEventListener('submit', event => {
   let delay = Number(formEls.delay.value);
   let step = Number(formEls.step.value);
   let amount = Number(formEls.amount.value);
-  //for position displaying and cycle operating
-  let position = 1;
 
   //create cycle of promises
-  for (; position <= amount; position++) {
+  for (let position = 1; position <= amount; position++) {
     createPromise(position, delay)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);

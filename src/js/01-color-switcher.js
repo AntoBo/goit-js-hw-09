@@ -20,7 +20,15 @@ function toggleBtns(...buttons) {
 //listen buttons clicks
 refs.startBtn.addEventListener('click', () => {
   toggleBtns(refs.stopBtn, refs.startBtn);
+  switchBobyBgColorLoop(interval);
+});
 
+refs.stopBtn.addEventListener('click', () => {
+  toggleBtns(refs.stopBtn, refs.startBtn);
+  clearInterval(timerId);
+});
+
+function switchBobyBgColorLoop(interval) {
   //switch color on first click without delay
   bodyEl.style.backgroundColor = getRandomHexColor();
 
@@ -28,12 +36,7 @@ refs.startBtn.addEventListener('click', () => {
   timerId = setInterval(() => {
     bodyEl.style.backgroundColor = getRandomHexColor();
   }, interval);
-});
-
-refs.stopBtn.addEventListener('click', () => {
-  toggleBtns(refs.stopBtn, refs.startBtn);
-  clearInterval(timerId);
-});
+}
 
 //get random color
 function getRandomHexColor() {
